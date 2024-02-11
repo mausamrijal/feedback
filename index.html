@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Review and Feedback | Mega Motors</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="header">
+   <img src="Megamotorsbg.png" alt="Mega Motors Background">
+   <h1>We Respect Your Time and Value.</h1>
+   <p>For our Next Best Sales Experience please Feel Free to give us Feedback and Suggestion | Mega Motors. Simply Luxurious</p>
+</div>
+<div class="container">
+  <div class="text">Vehicle Review and Feedback</div>
+ 
+
+<form method="post" id="feedbackForm">
+  <div class="form-row">
+    <div class="input-data">
+      <input type="text" name="firstName" required>
+      <div class="underline"></div>
+      <label for="">First Name</label>
+    </div>
+    <div class="input-data">
+      <input type="text" name="lastName" required>
+      <div class="underline"></div>
+      <label for="">Last Name</label>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="input-data">
+      <input type="email" name="email" required>
+      <div class="underline"></div>
+      <label for="">Email Address</label>
+    </div>
+    <div class="input-data">
+      <input type="text" name="vehicleName" required>
+      <div class="underline"></div>
+      <label for="">Vehicle Name/Message Subject</label>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="input-data textarea">
+      <textarea name="message" rows="8" cols="80" required></textarea>
+      <div class="underline"></div>
+      <label for="">Write your Feedback or message</label>
+    </div>
+  </div>
+  <div class="form-row submit-btn" id="submitButtonContainer">
+    <div class="input-data">
+      <div class="inner"></div>
+      <input type="submit" value="Submit" id="submitButton">
+    </div>
+  </div>
+</form>
+
+<div id="successContainer" class="success-container" style="display: none;">
+  <div class="lds-hourglass" id="successLoadingAnimation"></div>
+  <div id="successMessage" class="success-message">
+    <span class="close">&times;</span>
+    <p>Thank You For The Time and your Kind Message.| Mega Motors Simply Luxurious</p>
+  </div>
+</div>
+
+<div id="failureMessage" class="failure-message" style="display: none;">
+  <span class="close">&times;</span>
+  <p>Error occurred while submitting the form!</p>
+</div>
+
+<div class="lds-hourglass" id="loadingAnimation"></div>
+
+<script>
+// JavaScript code for handling form submission
+document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent default form submission
+
+  // Show loading animation
+  document.getElementById('loadingAnimation').style.display = 'block';
+
+  // Prepare form data
+  var formData = new FormData(this);
+
+  // Send form data to the backend
+  fetch('https://script.google.com/macros/s/AKfycbxNerXHLgAxnLnneyjeDHWsHpWOsQjW6UcOzCZwebE_fRS13lYONpV4HkhLkj1BcVvJ/exec', {
+    method: 'POST',
+    body: formData
+  })
+  .then(function(response) {
+    if (response.ok) {
+      // Show success message
+      document.getElementById('successContainer').style.display = 'block';
+      document.getElementById('feedbackForm').reset(); // Reset form fields
+
+      // Disable submit button
+      document.getElementById('submitButton').disabled = true;
+    } else {
+      throw new Error('Network response was not ok');
+    }
+  })
+  .catch(function(error) {
+    console.error('Error:', error);
+    // Show failure message
+    document.getElementById('failureMessage').style.display = 'block';
+  })
+  .finally(function() {
+    // Hide loading animation
+    document.getElementById('loadingAnimation').style.display = 'none';
+  });
+});
+
+// Close success message and enable submit button
+document.getElementById('successMessage').addEventListener('click', function() {
+  document.getElementById('successContainer').style.display = 'none';
+  document.getElementById('submitButton').disabled = false;
+});
+ // Close message box and redirect to www.negamotors.com.np
+  document.querySelectorAll('.close').forEach(function(closeButton) {
+    closeButton.addEventListener('click', function() {
+      window.location.href = 'https://megamotors.com.np/';
+    });
+  });
+
+</script>
+
+<style>
+/* Style for the loading animation */
+.lds-hourglass {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+}
+
+.lds-hourglass:after {
+  content: " ";
+  display: block;
+  width: 46px;
+  height: 46px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 5px solid #3498db;
+  border-color: #3498db transparent #3498db transparent;
+  animation: lds-hourglass 1.2s infinite;
+}
+
+@keyframes lds-hourglass {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    transform: rotate(1800deg);
+  }
+}
+
+/* Success and failure message styles */
+.success-container, .failure-message {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  width: 300px;
+  text-align: center;
+}
+
+.success-container {
+  background-color: #4CAF50; /* Background color of success container */
+  color: white;
+}
+
+.failure-message {
+  background-color: #f44336;
+  color: white;
+}
+
+.success-container p, .failure-message p {
+  margin: 0;
+}
+
+/* Close button styles */
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 12px 16px;
+  cursor: pointer;
+}
+
+.close:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+</style>
+
+<p>© Copyright 2024 Mega Motors. <a href="mailto:magemotors.sysevt.com">magemotors.sysevt.com</a></p>
+
+</div>
+</body>
+</html>
